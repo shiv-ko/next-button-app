@@ -4,13 +4,12 @@ import {useState} from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import { Button} from "@/components/ui/button";
 import CircularProgress from '@mui/material/CircularProgress';
-export const config = {
-  route: '/boss'
-}
+
+// export const config = {
+//   route: '/boss'
+// }
 
 const boss = () => {
-
- 
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
