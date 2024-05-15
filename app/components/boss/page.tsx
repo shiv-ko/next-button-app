@@ -1,6 +1,5 @@
 'use client';
-import React from 'react';
-import {useState} from 'react';
+import React,{useState}  from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import { Button} from "@/components/ui/button";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -9,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 //   route: '/boss'
 // }
 
-const boss = () => {
+export default function Boss(){
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -33,4 +32,3 @@ const boss = () => {
     )
     
 }
-export default boss;
