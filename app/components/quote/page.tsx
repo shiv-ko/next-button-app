@@ -1,7 +1,8 @@
 // components/Quote.tsx
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button"
+import { Button } from "@/imcomponents/ui/button"
+import EventDisplay from './EventDisplay';
 
 interface Quote {
   content: string;
@@ -67,6 +68,10 @@ return (
                 </div>
             )
         )}
+        <div>
+          <EventDisplay></EventDisplay>
+
+        </div>
     </div>
 );
 };

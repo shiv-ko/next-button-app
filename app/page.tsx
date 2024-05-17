@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Card, CardBody, CardHeader} from "@nextui-org/react";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Quote from "./components/quote/page";
-import Boss from "./components/boss/page";
+import Boss from "./components/load/page";
 
 
 export default function Index() {
