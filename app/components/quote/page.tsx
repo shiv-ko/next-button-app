@@ -69,7 +69,7 @@ return (
             )
         )}
         <div>
-          <EventDisplay></EventDisplay>
+          
 
         </div>
     </div>

@@ -3,7 +3,7 @@ import {Server} from "socket.io";
 
 export default function Boss() {
   return (
-    <div>this is boss</div>
+    <div>this is boss. now creating</div>
     
   )
 }
