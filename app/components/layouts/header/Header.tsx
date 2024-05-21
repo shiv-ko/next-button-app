@@ -10,6 +10,7 @@ const Header = () => {
       <Link href="/components/todo">todo</Link>
       <Link href="/components/load">Load</Link>
       <Link href="/components/boss">Boss</Link>
+      <Link href="/components/hamburger">Hamburger</Link>
     </div>
   )
 }
