@@ -4,7 +4,13 @@ import './Burger.css';
 const Burger: React.FC = () => {
   return (
     <div className="burger">
-      <div className="bun-top"></div>
+      <div className="bun-top">
+        <div className="sesame"></div>
+        <div className="sesame"></div>
+        <div className="sesame"></div>
+        <div className="sesame"></div>
+        <div className="sesame"></div>
+      </div>
       <div className="lettuce"></div>
       <div className="cheese"></div>
       <div className="tomato"></div>

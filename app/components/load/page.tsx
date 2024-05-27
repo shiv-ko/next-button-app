@@ -20,14 +20,22 @@ export default function Boss(){
 
     return (
       <div>
-        <Button onClick={handleOpen}>Load Button</Button>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-          onClick={handleClose}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+        <div>
+          <Button onClick={handleOpen}>Load Button</Button>
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </div>
+        <div>
+
+          
+        </div>
+
+
       </div>
     )
     
