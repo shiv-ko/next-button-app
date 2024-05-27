@@ -8,7 +8,8 @@ const page = () => {
       <Link href="/test">Home</Link>
       
       <Link href="/components/test/todo">todo</Link>
-      <Link href="/components/load">Load</Link>
+      <Link href="/components/test/load">load</Link>
+      <Link href="/components/test/aki">aki</Link>
       
     </div>
   )
