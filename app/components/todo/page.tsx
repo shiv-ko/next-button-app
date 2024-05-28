@@ -61,7 +61,7 @@ export default function EventCalendar() {
     const event = { ...newEvent, start: data.date.toISOString(), title: data.draggedEl.innerText, allDay: data.allDay, id: new Date().getTime() }
     setAllEvents([...allEvents, event])
   }
-  //削除モーダルを表示する処理（idを与えて、どれを消すかを指定する）
+  //削除モーダルを表示する処理（idを与えて、どのイベントを消すかを指定する）
   function handleDeleteModal(data: { event: { id: string } }) {
     setShowDeleteModal(true)
     setIdToDelete(Number(data.event.id))
@@ -157,7 +157,7 @@ export default function EventCalendar() {
             ))}
           </div>
         </div>
-
+        {/*イベントの削除を確認するためのModal*/}
         <Transition.Root show={showDeleteModal} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={setShowDeleteModal}>
             <Transition.Child
@@ -260,6 +260,7 @@ export default function EventCalendar() {
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                           Add Event
                         </Dialog.Title>
+                        {/*ここで追加を管理 */}
                         <form action="submit" onSubmit={handleSubmit}>
                           <div className="mt-2">
                             <input type="text" name="title" className="block w-full rounded-md border-0 py-1.5 text-gray-900 
