@@ -7,7 +7,8 @@ const Header = () => {
       
       <Link href="/">Home</Link>
       <Link href="/components/quote">Quote</Link>
-      <Link href="/components/todo">todo</Link>
+      <Link href="/components/todo">cal-org</Link>
+      <Link href="/components/modal">modal</Link>
       <Link href="/components/load">Load</Link>
       <Link href="/components/boss">Boss</Link>
       <Link href="/components/hamburger">Hamburger</Link>

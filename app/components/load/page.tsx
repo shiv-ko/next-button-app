@@ -3,10 +3,11 @@ import React,{useState}  from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import { Button} from "@/imcomponents/ui/button";
 import CircularProgress from '@mui/material/CircularProgress';
-
-// export const config = {
-//   route: '/boss'
-// }
+/*
+export const config = {
+  route: '/boss'
+}
+*/
 
 export default function Boss(){
 

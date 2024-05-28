@@ -10,6 +10,7 @@ const page = () => {
       <Link href="/components/test/todo">todo</Link>
       <Link href="/components/test/load">load</Link>
       <Link href="/components/test/aki">aki</Link>
+      <Link href="/components/test/task">task</Link>
       
     </div>
   )
