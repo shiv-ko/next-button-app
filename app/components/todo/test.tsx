@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Calendar } from "@/components/ui/calendar";
-import { Button} from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
-import { Input} from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Calendar } from "@/imcomponents/ui/calendar";
+import { Button} from "@/imcomponents/ui/button";
+import { Form } from "@/imcomponents/ui/form";
+import { Input} from "@/imcomponents/ui/input";
+import { Textarea } from "@/imcomponents/ui/textarea";
 
 interface ModalProps {
     isOpen: boolean;

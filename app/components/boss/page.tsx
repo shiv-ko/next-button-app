@@ -1,34 +1,46 @@
+// app/page.tsx
+
 'use client';
-import React,{useState}  from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import { Button} from "@/components/ui/button";
-import CircularProgress from '@mui/material/CircularProgress';
+import { Button } from "@/imcomponents/ui/button"
+import { useState } from 'react';
 
-// export const config = {
-//   route: '/boss'
-// }
+export default function Home() {
+  const [prompt, setPrompt] = useState<string>('');
+  const [result, setResult] = useState<string>('');
 
-export default function Boss(){
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const [open, setOpen] = useState(false);
-  const handleClose = () => {
-    setOpen(false);
+    const response = await fetch('/api/openai', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }),
+    });
+
+    const data = await response.json();
+    setResult(data.result);
   };
-    const handleOpen = () => {
-      setOpen(true);
-    };
 
-    return (
+  return (
+    <div>
+      <h1>OpenAI API with Next.js</h1>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          className="border border-gray-300"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          rows={10}
+          cols={50}
+        />
+        
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+      </form>
       <div>
-        <Button onClick={handleOpen}>Load Button</Button>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-          onClick={handleClose}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+        <h2 >Result</h2>
+        <p className="border border-gray-300 rounded-lg p-2 w-full h-40 focus:outline-none focus:ring-2 focus:ring-blue-500">{result}</p>
       </div>
-    )
-    
+    </div>
+  );
 }
