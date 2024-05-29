@@ -90,7 +90,7 @@ const styles = {
         flexDirection: 'column' as const,
         width: '100%',
         padding: '10px',
-        backgroundColor: '#3366FF' // Adjust your blue color here
+         // Adjust your blue color here
     },
     header: {
         display: 'flex',

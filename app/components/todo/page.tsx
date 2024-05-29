@@ -15,6 +15,17 @@ interface Event {
   title: string;
   start: Date | string;
   allDay: boolean;
+  description: string;
+  id: number;
+}
+
+interface Schedule {
+  title: string;
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+  description: string;
   id: number;
 }
 
@@ -33,7 +44,8 @@ export default function EventCalendar() {
     title: '',
     start: '',
     allDay: false,
-    id: 0
+    id: 0,
+    description: ''
   })
   //draggableなeventを設定、ここで設定したものがカレンダーに表示される。
   useEffect(() => {
@@ -80,7 +92,8 @@ export default function EventCalendar() {
       title: '',
       start: '',
       allDay: false,
-      id: 0
+      id: 0,
+      description: ''
     })
     setShowDeleteModal(false)
     setIdToDelete(null)
@@ -101,7 +114,8 @@ export default function EventCalendar() {
       title: '',
       start: '',
       allDay: false,
-      id: 0
+      id: 0,
+      description: ''
     })
   }
 
@@ -263,13 +277,69 @@ export default function EventCalendar() {
                         {/*ここで追加を管理 */}
                         <form action="submit" onSubmit={handleSubmit}>
                           <div className="mt-2">
-                            <input type="text" name="title" className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+                            <input type="text" name="title"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 
                             shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
                             focus:ring-2 
                             focus:ring-inset focus:ring-violet-600 
                             sm:text-sm sm:leading-6"
                               value={newEvent.title} onChange={(e) => handleChange(e)} placeholder="Title" />
+
+                            <div>
+                                {/*
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value={newEvent.title}
+                                    onChange={handleChange}
+                                    placeholder="Title"
+                                    style={styles.input}
+                                />
+                                <input
+                                    type="date"
+                                    name="startDate"
+                                    value={newEvent.startDate}
+                                    onChange={handleChange}
+                                    style={styles.input}
+                                />
+                                <input
+                                    type="time"
+                                    name="startTime"
+                                    value={newEvent.startTime}
+                                    onChange={handleChange}
+                                      style={styles.input}
+                                  />
+                                <input
+                                      type="date"
+                                      name="endDate"
+                                      value={newEvent.endDate}
+                                      onChange={handleChange}
+                                      style={styles.input}
+                                />
+                                <input
+                                      type="time"
+                                      name="endTime"
+                                      value={newEvent.endTime}
+                                      onChange={handleChange}
+                                      style={styles.input}
+                                />
+
+                                  */}
+                                <input
+                                    type="text"
+                                    name="description"
+                                    value={newEvent.description}
+                                    onChange={handleChange}
+                                    placeholder="Description"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+                                    shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+                                    focus:ring-2 
+                                    focus:ring-inset focus:ring-violet-600 
+                                    sm:text-sm sm:leading-6"
+                                />
+                            </div>
                           </div>
+
+
                           <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                             <button
                               type="submit"
@@ -299,3 +369,38 @@ export default function EventCalendar() {
     </>
   )
 }
+
+const styles = {
+  container: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      width: '100%',
+      padding: '10px',
+      
+  },
+  header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      color: 'white',
+      padding: '10px'
+  },
+  formGroup: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      alignItems: 'center',
+      justifyContent: 'center'
+  },
+  input: {
+      width: '90%',
+      padding: '10px',
+      margin: '5px',
+      border: 'none',
+      borderRadius: '5px'
+  },
+  button: {
+      color: 'white',
+      backgroundColor: 'transparent',
+      border: 'none'
+  }
+};
