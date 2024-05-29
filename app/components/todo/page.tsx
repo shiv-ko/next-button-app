@@ -7,12 +7,25 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 import { EventSourceInput } from '@fullcalendar/core/index.js'
-import {EventDisplay} from '@/EventDisplay';
+import jaLocale from "@fullcalendar/core/locales/ja";
+//import {EventDisplay} from '@/EventDisplay';
+import Burger from '../hamburger/Burger';
 
 interface Event {
   title: string;
   start: Date | string;
   allDay: boolean;
+  description: string;
+  id: number;
+}
+
+interface Schedule {
+  title: string;
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+  description: string;
   id: number;
 }
 
@@ -26,13 +39,15 @@ export default function EventCalendar() {
   const [showModal, setShowModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [idToDelete, setIdToDelete] = useState<number | null>(null)
+
   const [newEvent, setNewEvent] = useState<Event>({
     title: '',
     start: '',
     allDay: false,
-    id: 0
+    id: 0,
+    description: ''
   })
-
+  //draggableなeventを設定、ここで設定したものがカレンダーに表示される。
   useEffect(() => {
     let draggableEl = document.getElementById('draggable-el')
     if (draggableEl) {
@@ -47,35 +62,38 @@ export default function EventCalendar() {
       })
     }
   }, [])
-
+  //month表示から日をクリックしたときの処理
+  //新しいeventを作成して、現在時刻のタイムスタンプをidに設定している。
   function handleDateClick(arg: { date: Date, allDay: boolean }) {
     setNewEvent({ ...newEvent, start: arg.date, allDay: arg.allDay, id: new Date().getTime() })
     setShowModal(true)
   }
-
+  //ドロップしたときの処理追加している。
   function addEvent(data: DropArg) {
     const event = { ...newEvent, start: data.date.toISOString(), title: data.draggedEl.innerText, allDay: data.allDay, id: new Date().getTime() }
     setAllEvents([...allEvents, event])
   }
-
+  //削除モーダルを表示する処理（idを与えて、どのイベントを消すかを指定する）
   function handleDeleteModal(data: { event: { id: string } }) {
     setShowDeleteModal(true)
     setIdToDelete(Number(data.event.id))
   }
-
+  //削除確認modalで削除を選択したときの削除&modalを閉じる処理
   function handleDelete() {
     setAllEvents(allEvents.filter(event => Number(event.id) !== Number(idToDelete)))
     setShowDeleteModal(false)
     setIdToDelete(null)
   }
-
+  //modalwindowを閉じる処理
+  //setNewEventでフォームをリセットすることで、過去の情報を残さない。
   function handleCloseModal() {
     setShowModal(false)
     setNewEvent({
       title: '',
       start: '',
       allDay: false,
-      id: 0
+      id: 0,
+      description: ''
     })
     setShowDeleteModal(false)
     setIdToDelete(null)
@@ -96,9 +114,11 @@ export default function EventCalendar() {
       title: '',
       start: '',
       allDay: false,
-      id: 0
+      id: 0,
+      description: ''
     })
   }
+
 
   return (
     <>
@@ -109,6 +129,8 @@ export default function EventCalendar() {
         <div className="grid grid-cols-10">
           <div className="col-span-8">
             <FullCalendar
+              locales={[jaLocale]}
+              locale={jaLocale} 
               plugins={[
                 dayGridPlugin,
                 interactionPlugin,
@@ -124,14 +146,20 @@ export default function EventCalendar() {
               editable={true}
               droppable={true}
               selectable={true}
+              //
               selectMirror={true}
+              //月表示でどのようにするかはここで設定する？
               dateClick={handleDateClick}
+              //dataの中身は初期化された配列。そこをドロップできるようにしてる。
               drop={(data) => addEvent(data)}
+              //ここで削除以外のイベントも設定できると思う。
               eventClick={(data) => handleDeleteModal(data)}
+              
             />
           </div>
           <div id="draggable-el" className="ml-8 w-full border-2 p-2 rounded-md mt-16 lg:h-1/2 bg-violet-50">
             <h1 className="font-bold text-lg text-center">Drag Event</h1>
+            {/* draggableなevent配列を表示 */}
             {events.map(event => (
               <div
                 className="fc-event border-2 p-1 m-2 w-full rounded-md ml-auto text-center bg-white"
@@ -143,7 +171,7 @@ export default function EventCalendar() {
             ))}
           </div>
         </div>
-
+        {/*イベントの削除を確認するためのModal*/}
         <Transition.Root show={showDeleteModal} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={setShowDeleteModal}>
             <Transition.Child
@@ -184,7 +212,7 @@ export default function EventCalendar() {
                           </Dialog.Title>
                           <div className="mt-2">
                             <p className="text-sm text-gray-500">
-                              Are you sure you want to delete this event?
+                              Confirm that you want to delete this event.
                             </p>
                           </div>
                         </div>
@@ -207,8 +235,11 @@ export default function EventCalendar() {
               </div>
             </div>
           </Dialog>
+        { /* ここで、クリックしたらmodalを開いて、そのあとにmodalを閉じるとかを管理している。*/}
+        { /* transitionはheadless uiのやつ。*/}
         </Transition.Root>
         <Transition.Root show={showModal} as={Fragment}>
+          
           <Dialog as="div" className="relative z-10" onClose={setShowModal}>
             <Transition.Child
               as={Fragment}
@@ -219,6 +250,7 @@ export default function EventCalendar() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
+              
               <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </Transition.Child>
 
@@ -242,15 +274,72 @@ export default function EventCalendar() {
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                           Add Event
                         </Dialog.Title>
+                        {/*ここで追加を管理 */}
                         <form action="submit" onSubmit={handleSubmit}>
                           <div className="mt-2">
-                            <input type="text" name="title" className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+                            <input type="text" name="title"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 
                             shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
                             focus:ring-2 
                             focus:ring-inset focus:ring-violet-600 
                             sm:text-sm sm:leading-6"
                               value={newEvent.title} onChange={(e) => handleChange(e)} placeholder="Title" />
+
+                            <div>
+                                {/*
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value={newEvent.title}
+                                    onChange={handleChange}
+                                    placeholder="Title"
+                                    style={styles.input}
+                                />
+                                <input
+                                    type="date"
+                                    name="startDate"
+                                    value={newEvent.startDate}
+                                    onChange={handleChange}
+                                    style={styles.input}
+                                />
+                                <input
+                                    type="time"
+                                    name="startTime"
+                                    value={newEvent.startTime}
+                                    onChange={handleChange}
+                                      style={styles.input}
+                                  />
+                                <input
+                                      type="date"
+                                      name="endDate"
+                                      value={newEvent.endDate}
+                                      onChange={handleChange}
+                                      style={styles.input}
+                                />
+                                <input
+                                      type="time"
+                                      name="endTime"
+                                      value={newEvent.endTime}
+                                      onChange={handleChange}
+                                      style={styles.input}
+                                />
+
+                                  */}
+                                <input
+                                    type="text"
+                                    name="description"
+                                    value={newEvent.description}
+                                    onChange={handleChange}
+                                    placeholder="Description"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 
+                                    shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+                                    focus:ring-2 
+                                    focus:ring-inset focus:ring-violet-600 
+                                    sm:text-sm sm:leading-6"
+                                />
+                            </div>
                           </div>
+
+
                           <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                             <button
                               type="submit"
@@ -280,3 +369,38 @@ export default function EventCalendar() {
     </>
   )
 }
+
+const styles = {
+  container: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      width: '100%',
+      padding: '10px',
+      
+  },
+  header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      color: 'white',
+      padding: '10px'
+  },
+  formGroup: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      alignItems: 'center',
+      justifyContent: 'center'
+  },
+  input: {
+      width: '90%',
+      padding: '10px',
+      margin: '5px',
+      border: 'none',
+      borderRadius: '5px'
+  },
+  button: {
+      color: 'white',
+      backgroundColor: 'transparent',
+      border: 'none'
+  }
+};

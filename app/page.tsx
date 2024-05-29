@@ -13,29 +13,7 @@ export default function Index() {
     <div className=" items-center">
       <p className='flex justify-center '>Button</p>
       <div className="flex-col">
-        <TabGroup aria-label="Options">
-          <Tab key="Quote" title="Quote">
-            <Card>
-              <CardBody>
-                <Quote />
-              </CardBody>
-            </Card>  
-          </Tab>
-          <Tab key="Load" title="Load">
-            <Card>
-              <CardBody>
-                <Boss></Boss>
-              </CardBody>
-            </Card>  
-          </Tab>
-          <Tab key="videos" title="Videos">
-            <Card>
-              <CardBody>
-                videos
-              </CardBody>
-            </Card>  
-          </Tab>
-        </TabGroup>
+        <p >Where to go.</p>
       </div>  
         
     </div>
