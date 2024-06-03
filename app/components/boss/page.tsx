@@ -1,20 +1,20 @@
 // app/page.tsx
 
-'use client';
-import { Button } from "@/imcomponents/ui/button"
-import { useState } from 'react';
+"use client";
+import { Button } from "@/imcomponents/ui/button";
+import { useState } from "react";
 
 export default function Home() {
-  const [prompt, setPrompt] = useState<string>('');
-  const [result, setResult] = useState<string>('');
+  const [prompt, setPrompt] = useState<string>("");
+  const [result, setResult] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch('/api/openai', {
-      method: 'POST',
+    const response = await fetch("/api/openai", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ prompt }),
     });
@@ -34,12 +34,19 @@ export default function Home() {
           rows={10}
           cols={50}
         />
-        
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Submit
+        </button>
       </form>
       <div>
-        <h2 >Result</h2>
-        <p className="border border-gray-300 rounded-lg p-2 w-full h-40 focus:outline-none focus:ring-2 focus:ring-blue-500">{result}</p>
+        <h2>Result</h2>
+        <p className="border border-gray-300 rounded-lg p-2 w-full h-40 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          {result}
+        </p>
       </div>
     </div>
   );
